@@ -25,8 +25,7 @@ public class Scanner{
 
     }
 
-    //TODO: infinite loops for unterminate line comments
-
+    //TODO: still can't scan block comments on a single line in between text
     private void take(char expectedChar){
         if(currentChar == expectedChar){
             currentSpelling.append(currentChar);

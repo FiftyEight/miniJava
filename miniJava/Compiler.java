@@ -19,7 +19,7 @@ class Compiler{
 
         //  fail 167? 168
 
-        File file = new File("/Users/cloftin/miniJava/standard_test.java"); //3rd argument?
+        File file = new File("/Users/cloftin/miniJava/pa3_tests/fail333.java"); //3rd argument?
         //FileInputStream stream;
         FileReader reader;
         LineNumberReader stream;
@@ -32,13 +32,14 @@ class Compiler{
             Scanner scanner = new Scanner(stream);
             Parser parser = new Parser(scanner);
             TypeCheck checker = new TypeCheck();
+            Identify ident = new Identify();
 
             AST ast = parser.parse();
 
             if(ast != null){
                 ASTDisplay display = new ASTDisplay();
-                //display.showTree(ast);
-                //ident.identify((AbstractSyntaxTrees.Package)ast);
+                display.showTree(ast);
+                ident.identify((miniJava.AbstractSyntaxTrees.Package)ast);
                 checker.check((miniJava.AbstractSyntaxTrees.Package)ast);
 
                 System.exit(0); //program was successfully parsed

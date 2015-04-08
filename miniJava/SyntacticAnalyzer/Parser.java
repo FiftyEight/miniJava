@@ -70,12 +70,13 @@ public class Parser{
     private void accept(TokenKind expectedTokenKind) {
         //accepts a given terminal
         if(currentToken.kind == expectedTokenKind){
+            System.out.println("ACCEPTED: " + expectedTokenKind);
             currentToken = nextToken;
             nextToken = next_next_token;
             next_next_token = scanner.scan();
         }
         else{
-            System.err.println("SYNTAX ERROR: found " + currentToken.kind + ", expected " + expectedTokenKind);
+            System.err.println("SYNTAX ERROR at line " + scanner.inputStream.getLineNumber() + ": found " + currentToken.kind + ", expected " + expectedTokenKind);
             valid = false; //this source is invalid
             System.exit(4); //TODO: remove this, its temporary
         }
@@ -358,6 +359,10 @@ public class Parser{
                 if(arg_starters.contains(currentToken.kind)){
                     argList = parseArgList(sp);
                 }
+                else{
+                    argList = new ExprList();
+                }
+
                 accept(TokenKind.RPAREN);
                 return new CallExpr(ref, argList, sp);
             }
@@ -673,7 +678,7 @@ public class Parser{
                             return null;
                         }
                         retExp = parseExpression(sp);
-                        accept(TokenKind.SEMIC);
+
                     }
 
                     accept(TokenKind.RCURL);
